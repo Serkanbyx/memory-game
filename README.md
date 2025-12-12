@@ -16,7 +16,7 @@ A responsive, interactive card matching game built with vanilla JavaScript. Chal
 
 ## Live Demo
 
-[🎮 View Live Demo](https://serkanbyx.github.io/memory-game/)
+[🎮 View Live Demo](https://memory-gameeeeee.netlify.app/)
 
 ## Technologies
 
