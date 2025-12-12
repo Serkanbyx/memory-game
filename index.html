@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memory Game</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Memory Game</h1>
+        <div class="stats-bar">
+          <div class="stat-item">
+            <span class="label">Level:</span>
+            <span id="level">1</span>
+          </div>
+          <div class="stat-item">
+            <span class="label">Time:</span>
+            <span id="time">00:00</span>
+          </div>
+          <div class="stat-item">
+            <span class="label">Moves:</span>
+            <span id="moves">0</span>
+          </div>
+        </div>
+      </header>
+
+      <main id="game-board" class="game-board">
+        <!-- Cards will be generated here -->
+      </main>
+
+      <div class="controls">
+        <button id="restart-btn" class="btn">Restart Level</button>
+      </div>
+
+      <div id="matched-container" class="matched-container">
+        <h3>Matched Cards</h3>
+        <div id="matched-deck" class="matched-deck">
+          <!-- Matched pairs will be moved here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Level Complete / Game Over -->
+    <div id="modal" class="modal hidden">
+      <div class="modal-content">
+        <h2 id="modal-title">Level Complete!</h2>
+        <p id="modal-message">Great job!</p>
+        <button id="next-level-btn" class="btn">Next Level</button>
+      </div>
+    </div>
+
+    <audio
+      id="win-sound"
+      src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3"
+      preload="auto"
+    ></audio>
+
+    <script src="script.js"></script>
+  </body>
+</html>
