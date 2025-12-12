@@ -14,6 +14,8 @@ const modalMessage = document.getElementById('modal-message');
 const nextLevelBtn = document.getElementById('next-level-btn');
 const matchedDeck = document.getElementById('matched-deck');
 const winSound = document.getElementById('win-sound');
+const matchSound = document.getElementById('match-sound');
+const volumeSlider = document.getElementById('volume-slider');
 
 // Game State
 let gameState = {
@@ -24,7 +26,8 @@ let gameState = {
     time: 0,
     timerInterval: null,
     level: 1,
-    isLocked: false // Lock board during animations
+    isLocked: false, // Lock board during animations
+    volume: 0.5
 };
 
 // Level Configuration
@@ -212,6 +215,13 @@ function disableCards(card1, card2) {
         card1.classList.add('matched');
         card2.classList.add('matched');
         
+        // Play match sound
+        if (matchSound && gameState.volume > 0) {
+            matchSound.volume = gameState.volume;
+            matchSound.currentTime = 0;
+            matchSound.play().catch(e => console.log("Audio play failed:", e));
+        }
+
         moveCardsToMatchedDeck(card1, card2);
 
         gameState.matchedPairs++;
@@ -342,7 +352,8 @@ function handleLevelComplete() {
  */
 function triggerWinEffects() {
     // Play Sound
-    if (winSound) {
+    if (winSound && gameState.volume > 0) {
+        winSound.volume = gameState.volume;
         winSound.currentTime = 0;
         winSound.play().catch(e => console.log("Audio play failed:", e));
     }
@@ -378,6 +389,10 @@ function setupEventListeners() {
     restartBtn.addEventListener('click', () => {
         // Restart current level
         setupLevel(gameState.level);
+    });
+
+    volumeSlider.addEventListener('input', (e) => {
+        gameState.volume = parseFloat(e.target.value);
     });
 }
 

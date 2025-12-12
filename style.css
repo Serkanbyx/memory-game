@@ -133,6 +133,40 @@ h1 {
 /* Controls */
 .controls {
     margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.sound-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    padding: 8px 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.volume-icon {
+    width: 24px;
+    height: 24px;
+    fill: var(--primary-color);
+}
+
+#volume-slider {
+    width: 100px;
+    accent-color: var(--accent-color);
+    cursor: pointer;
+    height: 4px;
 }
 
 .btn {
@@ -154,6 +188,11 @@ h1 {
 
 .btn:active {
     transform: translateY(0);
+}
+
+.btn.muted {
+    background-color: #999;
+    opacity: 0.8;
 }
 
 /* Modal */
