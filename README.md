@@ -200,11 +200,11 @@ Modify the `levels` object in `script.js`:
 
 ```javascript
 const levels = {
-  1: { rows: 2, cols: 3, pairs: 3 }, // Easier
-  2: { rows: 3, cols: 4, pairs: 6 },
-  3: { rows: 4, cols: 4, pairs: 8 },
-  4: { rows: 4, cols: 5, pairs: 10 },
-  5: { rows: 5, cols: 6, pairs: 15 }, // Add more levels
+  1: { cols: 3, pairs: 3 }, // Easier
+  2: { cols: 4, pairs: 6 },
+  3: { cols: 4, pairs: 8 },
+  4: { cols: 5, pairs: 10 },
+  5: { cols: 6, pairs: 15 }, // Add more levels
 };
 ```
 

@@ -20,6 +20,7 @@ const matchSound = document.getElementById('match-sound');
 const volumeSlider = document.getElementById('volume-slider');
 const themeToggleBtn = document.getElementById('theme-toggle-btn');
 const leaderboardList = document.getElementById('leaderboard-list');
+const clearLeaderboardBtn = document.getElementById('clear-leaderboard-btn');
 
 // Game State
 let gameState = {
@@ -37,10 +38,10 @@ let gameState = {
 
 // Level Configuration
 const levels = {
-    1: { rows: 3, cols: 4, pairs: 6 },
-    2: { rows: 4, cols: 4, pairs: 8 },
-    3: { rows: 4, cols: 5, pairs: 10 },
-    4: { rows: 4, cols: 6, pairs: 12 }
+    1: { cols: 4, pairs: 6 },
+    2: { cols: 4, pairs: 8 },
+    3: { cols: 5, pairs: 10 },
+    4: { cols: 6, pairs: 12 }
 };
 
 // Card Content (Emojis)
@@ -100,7 +101,7 @@ function setupLevel(level) {
 
     const config = levels[level] || levels[1];
 
-    gameBoard.style.gridTemplateColumns = `repeat(${config.cols}, 1fr)`;
+    gameBoard.style.setProperty('--cols', config.cols);
 
     const cardValues = generateCardDeck(config.pairs);
     gameState.cards = cardValues;
@@ -126,6 +127,19 @@ function resetGameData() {
 }
 
 /**
+ * Generate a unique card identifier.
+ * Uses the native crypto.randomUUID when available, with a fallback
+ * for older browsers that do not support it.
+ * @returns {string}
+ */
+function createCardId() {
+    if (window.crypto?.randomUUID) {
+        return window.crypto.randomUUID();
+    }
+    return `card-${Date.now()}-${Math.floor(Math.random() * 1e9)}`;
+}
+
+/**
  * Generate pairs of cards and shuffle them
  * @param {number} pairCount
  * @returns {Array} Shuffled array of card values
@@ -135,8 +149,8 @@ function generateCardDeck(pairCount) {
     const selectedEmojis = emojis.slice(0, pairCount);
 
     selectedEmojis.forEach(emoji => {
-        deck.push({ id: Math.random().toString(36).substr(2, 9), value: emoji });
-        deck.push({ id: Math.random().toString(36).substr(2, 9), value: emoji });
+        deck.push({ id: createCardId(), value: emoji });
+        deck.push({ id: createCardId(), value: emoji });
     });
 
     return shuffleArray(deck);
@@ -467,14 +481,23 @@ function setupEventListeners() {
         themeToggleBtn.addEventListener('click', toggleDarkMode);
     }
 
+    // Clear leaderboard
+    if (clearLeaderboardBtn) {
+        clearLeaderboardBtn.addEventListener('click', clearLeaderboard);
+    }
+
     // Modal keyboard trap
     modal.addEventListener('keydown', (e) => {
         if (e.key === 'Tab') {
             e.preventDefault();
             nextLevelBtn.focus();
         }
+        // The modal only appears once a level is complete, so Escape should
+        // advance the game (same as the primary button) instead of leaving
+        // the player stuck on a fully matched board.
         if (e.key === 'Escape') {
-            modal.classList.add('hidden');
+            e.preventDefault();
+            nextLevelBtn.click();
         }
     });
 

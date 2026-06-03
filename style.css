@@ -195,7 +195,7 @@ h1 {
     display: grid;
     grid-gap: var(--gap-size);
     width: 100%;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(var(--cols, 4), 1fr);
     perspective: 1000px;
 }
 
